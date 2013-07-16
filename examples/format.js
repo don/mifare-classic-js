@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var mifare = require('../ndef-mifare-classic');
+var mifare = require('..');
     
 mifare.format(function(err) {
     if (err) {

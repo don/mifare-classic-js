@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 var ndef = require('ndef'),
-    mifare = require('../ndef-mifare-classic'),
+    mifare = require('..'),
     util = ndef.util;
 
 mifare.read(function(err, buffer) {
