@@ -18,7 +18,7 @@
     "url": "https://github.com/don/ndef-mifare-classic-js/issues"
   },
   "dependencies" : {
-    "ndef"   :  ">=0.0.2"
+    "ndef"   :  ">=0.0.3"
   },
   "engines": {
     "node": ">=0.10"
