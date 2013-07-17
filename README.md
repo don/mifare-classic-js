@@ -13,7 +13,7 @@ Example
     mifare.read(function (err, data) {
       if (err) throw err;
       var message = ndef.decodeMessage(buffer.toJSON());
-      console.log(util.stringify(message));
+      console.log(ndef.stringify(message));
     });
     
 The callback is passed two arguments (err, data), where data is the contents of the file

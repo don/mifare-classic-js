@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
 var ndef = require('ndef'),
-    mifare = require('..'),
-    util = ndef.util;
-
+    mifare = require('..');
+    
 mifare.read(function(err, buffer) {
     if (err) {
         console.log("Read failed ");
@@ -13,7 +12,7 @@ mifare.read(function(err, buffer) {
         var message = ndef.decodeMessage(buffer.toJSON());
         console.log("Found NDEF message with " + message.length +
             (message.length === 1 ? " record" : " records" ));
-        console.log(util.stringify(message));            
+        console.log(ndef.stringify(message));            
     }
 })
 
