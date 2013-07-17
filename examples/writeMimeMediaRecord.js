@@ -35,7 +35,7 @@ hueSettings = {
 }
     
 message = [
-    ndef.mimeMediaRecord("text/hue", JSON.stringify(hueSettings));
+    ndef.mimeMediaRecord("text/hue", JSON.stringify(hueSettings))
 ];
 
 bytes = ndef.encodeMessage(message);
