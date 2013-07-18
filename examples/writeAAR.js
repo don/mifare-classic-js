@@ -7,7 +7,7 @@ var ndef = require('ndef'),
     vcard;
     
 message = [
-    ndef.record(ndef.TNF_EXTERNAL, 'android.com:pkg' , [], 'com.joelapenna.foursquared')
+    ndef.record(ndef.TNF_EXTERNAL_TYPE, 'android.com:pkg' , [], 'com.joelapenna.foursquared')
 ];
 
 bytes = ndef.encodeMessage(message);
