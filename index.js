@@ -2,12 +2,23 @@ var spawn = require('child_process').spawn,
     fs = require('fs'),
     fileName = 'ndef.bin'; // TODO use temp files
 
+function defaultCallback(err) {
+    if (err) { throw err; }
+}
+
+function defaultReadCallback(err, data) {
+    if (err) { throw err; }
+    console.log(data);
+}
+
 // callback(err, data)
 // data is stream of ndef bytes from the tag
 function read(callback) {
     
     var errorMessage = "",
         readMifareClassic = spawn('mifare-classic-read-ndef', [ '-y', '-o', fileName]);
+
+    if (!callback) { callback = defaultReadCallback; }
 
     readMifareClassic.stdout.on('data', function (data) {
         process.stdout.write(data + "");        
@@ -35,6 +46,8 @@ function write(data, callback) {
     
     var buffer = Buffer(data),
         errorMessage = "";
+
+    if (!callback) { callback = defaultWriteCallback; }
         
     fs.writeFile(fileName, buffer, function(err) {
         if (err) callback(err);
@@ -63,6 +76,8 @@ function write(data, callback) {
 function format(callback) {
     
     var errorMessage;
+
+    if (!callback) { callback = defaultCallback; }
     
     formatMifareClassic = spawn('mifare-classic-format', [ '-y']);
         
