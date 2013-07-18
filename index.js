@@ -47,7 +47,7 @@ function write(data, callback) {
     var buffer = Buffer(data),
         errorMessage = "";
 
-    if (!callback) { callback = defaultWriteCallback; }
+    if (!callback) { callback = defaultCallback; }
         
     fs.writeFile(fileName, buffer, function(err) {
         if (err) callback(err);
