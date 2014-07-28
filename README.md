@@ -12,7 +12,7 @@ Example
 
     mifare.read(function (err, data) {
       if (err) throw err;
-      var message = ndef.decodeMessage(buffer.toJSON());
+      var message = ndef.decodeMessage(data.toJSON());
       console.log(ndef.stringify(message));
     });
     
