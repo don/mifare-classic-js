@@ -1,7 +1,7 @@
 {
   "name": "mifare-classic",
   "author": "Don Coleman <don.coleman@gmail.com>",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Read and write NDEF bytes to Mifare Classic NFC Tags",
   "main": "index.js",
   "repository": {
@@ -12,16 +12,16 @@
     "NDEF",
     "NFC"
   ],
-  "license": "BSD",
+  "license": "BSD-3-Clause",
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/don/mifare-classic-js/issues"
   },
   "dependencies" : {
-    "ndef"   :  ">=0.0.4"
+    "ndef"   :  "~0.1.2"
   },
   "engines": {
     "node": ">=0.8"
   }
-  
+
 }
