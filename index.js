@@ -16,7 +16,7 @@ function defaultReadCallback(err, data) {
 function read(callback) {
 
     var errorMessage = "",
-      result = "",
+      result = "",          // string for stdout from process
         readMifareClassic = spawn('mifare-classic-read-ndef', [ '-y', '-o', fileName]);
 
     if (!callback) { callback = defaultReadCallback; }
@@ -32,9 +32,9 @@ function read(callback) {
     });
 
     readMifareClassic.on('close', function (code) {
-      if (!result.includes('Found')) {
-        errorMessage = "No tag found";
-      }
+      if (!result.includes('Found')) {    // If stdout does not contain
+        errorMessage = "No tag found";    // "Found"
+      }                                   // then there should be an error
         if (code === 0 && errorMessage.length === 0) {
             fs.readFile(fileName, function (err, data) {
                 callback(err, data);
@@ -70,9 +70,9 @@ function write(data, callback) {
         });
 
         writeMifareClassic.on('close', function (code) {
-          if (!result.includes('Found')) {
-            errorMessage = "No tag found";
-          }
+          if (!result.includes('Found')) {    // If stdout does not contain
+            errorMessage = "No tag found";    // "Found"
+          }                                   // then there should be an error
             if (code === 0 && errorMessage.length === 0) {
                 callback(null);
                 fs.unlinkSync(fileName);
@@ -103,9 +103,9 @@ function format(callback) {
     });
 
     formatMifareClassic.on('close', function (code) {
-        if (!result.includes('Found')) {
-          errorMessage = "No tag found";
-        }
+      if (!result.includes('Found')) {    // If stdout does not contain
+        errorMessage = "No tag found";    // "Found"
+      }                                   // then there should be an error
         if (code === 0) {
             callback(null);
         } else {
