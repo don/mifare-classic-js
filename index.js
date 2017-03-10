@@ -106,7 +106,7 @@ function format(callback) {
       if (!result.includes('Found')) {    // If stdout does not contain
         errorMessage = "No tag found";    // "Found"
       }                                   // then there should be an error
-        if (code === 0) {
+        if (code === 0 && errorMessage.length === 0) {
             callback(null);
         } else {
             callback(errorMessage);
