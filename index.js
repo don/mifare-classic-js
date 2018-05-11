@@ -14,14 +14,16 @@ function defaultReadCallback(err, data) {
 // callback(err, data)
 // data is stream of ndef bytes from the tag
 function read(callback) {
-    
+
     var errorMessage = "",
+      result = "",          // string for stdout from process
         readMifareClassic = spawn('mifare-classic-read-ndef', [ '-y', '-o', fileName]);
 
     if (!callback) { callback = defaultReadCallback; }
 
     readMifareClassic.stdout.on('data', function (data) {
-        process.stdout.write(data + "");        
+        process.stdout.write(data + "");
+            result += data;
     });
 
     readMifareClassic.stderr.on('data', function (data) {
@@ -30,10 +32,13 @@ function read(callback) {
     });
 
     readMifareClassic.on('close', function (code) {
+      if (!result.includes('Found')) {    // If stdout does not contain
+        errorMessage = "No tag found";    // "Found"
+      }                                   // then there should be an error
         if (code === 0 && errorMessage.length === 0) {
             fs.readFile(fileName, function (err, data) {
                 callback(err, data);
-                fs.unlinkSync(fileName);          
+                fs.unlinkSync(fileName);
             });
         } else {
             callback(errorMessage);
@@ -43,26 +48,31 @@ function read(callback) {
 
 // callback(err)
 function write(data, callback) {
-    
+
     var buffer = Buffer(data),
-        errorMessage = "";
+        errorMessage = "",
+        result = "";
 
     if (!callback) { callback = defaultCallback; }
-        
+
     fs.writeFile(fileName, buffer, function(err) {
         if (err) callback(err);
         writeMifareClassic = spawn('mifare-classic-write-ndef', [ '-y', '-i', fileName]);
-        
+
         writeMifareClassic.stdout.on('data', function (data) {
             process.stdout.write(data + "");
+            result += data;
         });
-        
+
         writeMifareClassic.stderr.on('data', function (data) {
             errorMessage += data;
-            // console.log('stderr: ' + data);
+            //console.log('stderr: ' + data);
         });
 
         writeMifareClassic.on('close', function (code) {
+          if (!result.includes('Found')) {    // If stdout does not contain
+            errorMessage = "No tag found";    // "Found"
+          }                                   // then there should be an error
             if (code === 0 && errorMessage.length === 0) {
                 callback(null);
                 fs.unlinkSync(fileName);
@@ -74,24 +84,29 @@ function write(data, callback) {
 }
 
 function format(callback) {
-    
-    var errorMessage;
+
+    var errorMessage,
+      result;
 
     if (!callback) { callback = defaultCallback; }
-    
+
     formatMifareClassic = spawn('mifare-classic-format', [ '-y']);
-        
+
     formatMifareClassic.stdout.on('data', function (data) {
         process.stdout.write(data + "");
+        result += data;
     });
-    // 
+    //
     formatMifareClassic.stderr.on('data', function (data) {
         errorMessage += data;
         // console.log('stderr: ' + data);
     });
 
     formatMifareClassic.on('close', function (code) {
-        if (code === 0) {
+      if (!result.includes('Found')) {    // If stdout does not contain
+        errorMessage = "No tag found";    // "Found"
+      }                                   // then there should be an error
+        if (code === 0 && errorMessage.length === 0) {
             callback(null);
         } else {
             callback(errorMessage);
