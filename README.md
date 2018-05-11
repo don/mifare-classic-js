@@ -10,8 +10,9 @@ This module reads and writes NDEF bytes to Mifare Classic NFC tags. The module i
     
 Example
 
-    mifare.read(function (err, data) {
+    mifare.read(function (err, data, uid) {
       if (err) throw err;
+      console.log('The NFC tag UID is', uid);
       var message = ndef.decodeMessage(data.toJSON());
       console.log(ndef.stringify(message));
     });
@@ -45,5 +46,15 @@ Example
 
 * [libfreefare](https://code.google.com/p/libfreefare/) 14219ab1451f7c4e4da51acb6f8524924ec039e6 or newer
 * [libnfc](https://code.google.com/p/libnfc/) 1.7.0-rc7 or greater
+
+### Linux (Debian)
+
+    sudo apt-get install libfreefare* libnfc* -y
+
+### macOS
+
+Use [Homebrew](https://brew.sh)
+
+    brew install libfreefare libnfc
 
 
