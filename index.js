@@ -37,7 +37,7 @@ function read(callback) {
             errorMessage = "No tag found";  // then there should be an error
         } else {
             // parse the UID from the mifare-classic-read-ndef output
-            uid = result.match(/with UID ([A-F0-9*])/i)[1];
+            uid = result.match(/with UID ([A-F0-9]*)/i)[1];
         }                                  
         if (code === 0 && errorMessage.length === 0) {
             fs.readFile(fileName, function (err, data) {
