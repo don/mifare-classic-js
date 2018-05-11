@@ -49,7 +49,7 @@ function read(callback) {
 // callback(err)
 function write(data, callback) {
 
-    var buffer = Buffer(data),
+    var buffer = Buffer.from(data),
         errorMessage = "",
         result = "";
 
