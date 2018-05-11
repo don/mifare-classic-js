@@ -17,6 +17,7 @@ function read(callback) {
 
     var errorMessage = "",
         result = "",          // string for stdout from process
+        uid = null,
         readMifareClassic = spawn('mifare-classic-read-ndef', [ '-y', '-o', fileName]);
 
     if (!callback) { callback = defaultReadCallback; }
@@ -32,12 +33,15 @@ function read(callback) {
     });
 
     readMifareClassic.on('close', function (code) {
-        if (!result.includes('Found')) {    // If stdout does not contain
-            errorMessage = "No tag found";  // "Found"
-        }                                   // then there should be an error
+        if (!result.includes('Found')) {    // If stdout does not contain "Found"
+            errorMessage = "No tag found";  // then there should be an error
+        } else {
+            // parse the UID from the mifare-classic-read-ndef output
+            uid = result.match(/with UID ([A-F0-9*])/i)[1];
+        }                                  
         if (code === 0 && errorMessage.length === 0) {
             fs.readFile(fileName, function (err, data) {
-                callback(err, data);
+                callback(err, data, uid);
                 fs.unlinkSync(fileName);
             });
         } else {
