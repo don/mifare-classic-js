@@ -16,14 +16,14 @@ function defaultReadCallback(err, data) {
 function read(callback) {
 
     var errorMessage = "",
-      result = "",          // string for stdout from process
+        result = "",          // string for stdout from process
         readMifareClassic = spawn('mifare-classic-read-ndef', [ '-y', '-o', fileName]);
 
     if (!callback) { callback = defaultReadCallback; }
 
     readMifareClassic.stdout.on('data', function (data) {
         process.stdout.write(data + "");
-            result += data;
+        result += data;
     });
 
     readMifareClassic.stderr.on('data', function (data) {
@@ -32,9 +32,9 @@ function read(callback) {
     });
 
     readMifareClassic.on('close', function (code) {
-      if (!result.includes('Found')) {    // If stdout does not contain
-        errorMessage = "No tag found";    // "Found"
-      }                                   // then there should be an error
+        if (!result.includes('Found')) {    // If stdout does not contain
+            errorMessage = "No tag found";  // "Found"
+        }                                   // then there should be an error
         if (code === 0 && errorMessage.length === 0) {
             fs.readFile(fileName, function (err, data) {
                 callback(err, data);
@@ -70,9 +70,9 @@ function write(data, callback) {
         });
 
         writeMifareClassic.on('close', function (code) {
-          if (!result.includes('Found')) {    // If stdout does not contain
-            errorMessage = "No tag found";    // "Found"
-          }                                   // then there should be an error
+            if (!result.includes('Found')) {    // If stdout does not contain
+                errorMessage = "No tag found";  // "Found"
+            }                                   // then there should be an error
             if (code === 0 && errorMessage.length === 0) {
                 callback(null);
                 fs.unlinkSync(fileName);
@@ -96,16 +96,16 @@ function format(callback) {
         process.stdout.write(data + "");
         result += data;
     });
-    //
+    
     formatMifareClassic.stderr.on('data', function (data) {
         errorMessage += data;
         // console.log('stderr: ' + data);
     });
 
     formatMifareClassic.on('close', function (code) {
-      if (!result.includes('Found')) {    // If stdout does not contain
-        errorMessage = "No tag found";    // "Found"
-      }                                   // then there should be an error
+        if (!result.includes('Found')) {    // If stdout does not contain
+            errorMessage = "No tag found";  // "Found"
+        }                                   // then there should be an error
         if (code === 0 && errorMessage.length === 0) {
             callback(null);
         } else {
