@@ -1,0 +1,2 @@
+== 0.1.0 ==
+Add message when no tag found. #6 Thanks Tom Igoe (tigoe)

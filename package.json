@@ -1,7 +1,7 @@
 {
   "name": "mifare-classic",
   "author": "Don Coleman <don.coleman@gmail.com>",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Read and write NDEF bytes to Mifare Classic NFC Tags",
   "main": "index.js",
   "repository": {
