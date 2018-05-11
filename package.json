@@ -17,11 +17,10 @@
   "bugs": {
     "url": "https://github.com/don/mifare-classic-js/issues"
   },
-  "dependencies" : {
-    "ndef"   :  "~0.1.2"
+  "dependencies": {
+    "ndef": "^0.2.0"
   },
   "engines": {
-    "node": ">=0.8"
+    "node": ">=4.0.0"
   }
-
 }
